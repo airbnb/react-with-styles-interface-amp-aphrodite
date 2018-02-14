@@ -15,7 +15,7 @@ const cssArgNormalizer = (arg, create) => {
   //       this code will have to be updated to match...
   // eslint-disable-next-line no-underscore-dangle
   if (!arg || arg._definition) return arg;
-  return create(() => ({ style: arg }))().style;
+  return create(() => ({ style: arg })).style;
 };
 
 function withAmp(styles, resolve, create) {
@@ -34,7 +34,7 @@ function withAmp(styles, resolve, create) {
 
 export default aphroditeInterface => ({
   create(styleHash) {
-    return aphroditeInterface.create(styleHash);
+    return aphroditeInterface.createLTR(styleHash);
   },
 
   createLTR(styleHash) {
@@ -46,8 +46,8 @@ export default aphroditeInterface => ({
   },
 
   resolve(styles) {
-    const { resolve, create } = aphroditeInterface;
-    return withAmp(styles, resolve, create);
+    const { resolveLTR, createLTR } = aphroditeInterface;
+    return withAmp(styles, resolveLTR, createLTR);
   },
 
   resolveLTR(styles) {
