@@ -34,7 +34,7 @@ function withAmp(styles, resolve, create) {
 
 export default aphroditeInterface => ({
   create(styleHash) {
-    return aphroditeInterface.createLTR(styleHash);
+    return aphroditeInterface.create(styleHash);
   },
 
   createLTR(styleHash) {
@@ -46,8 +46,8 @@ export default aphroditeInterface => ({
   },
 
   resolve(styles) {
-    const { resolveLTR, createLTR } = aphroditeInterface;
-    return withAmp(styles, resolveLTR, createLTR);
+    const { resolve, create } = aphroditeInterface;
+    return withAmp(styles, resolve, create);
   },
 
   resolveLTR(styles) {
