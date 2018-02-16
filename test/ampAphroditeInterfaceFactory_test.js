@@ -3,6 +3,8 @@ import sinon from 'sinon-sandbox';
 import aphrodite from 'aphrodite';
 import aphroditeInterface from 'react-with-styles-interface-aphrodite';
 
+import * as isAmp from '../src/utils/isAmp';
+
 import ampAphroditeInterfaceFactory from '../src/ampAphroditeInterfaceFactory';
 
 describe('ampAphroditeInterfaceFactory', () => {
@@ -96,6 +98,46 @@ describe('ampAphroditeInterfaceFactory', () => {
     it('calls aphroditeInterface.resolveRTL method', () => {
       ampAphroditeInterface.resolveRTL([]);
       expect(aphroditeInterfaceResolveRTLSpy.callCount).to.equal(1);
+    });
+  });
+
+  describe('isAmp set to true', () => {
+    beforeEach(() => {
+      sinon.stub(isAmp, 'default').returns(true);
+    });
+
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    describe('.resolve()', () => {
+      it('converts inline styles to classNames', () => {
+        expect(ampAphroditeInterface.resolve([
+          {
+            left: 10,
+          },
+        ])).to.eql({ className: 'inlineStyle_lg4jz7' });
+      });
+    });
+
+    describe('.resolveLTR()', () => {
+      it('converts inline styles to classNames', () => {
+        expect(ampAphroditeInterface.resolveLTR([
+          {
+            left: 10,
+          },
+        ])).to.eql({ className: 'inlineStyle_lg4jz7' });
+      });
+    });
+
+    describe('.resolveRTL()', () => {
+      it('converts inline styles to classNames', () => {
+        expect(ampAphroditeInterface.resolveRTL([
+          {
+            left: 10,
+          },
+        ])).to.eql({ className: 'inlineStyle_6eoou0' });
+      });
     });
   });
 });

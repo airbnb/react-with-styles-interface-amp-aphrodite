@@ -4,6 +4,8 @@ import { defaultSelectorHandlers } from 'aphrodite/lib/generate';
 import cullResponsiveStylesForAmp from './utils/cullResponsiveStylesForAmp';
 import isAmp from './utils/isAmp';
 
+const INLINE_STYLE_KEY = 'inlineStyle';
+
 // Replaces inlines styles with styles that will be converted to
 // class names. We do this because AMP doesn't support inline styles.
 const cssArgNormalizer = (arg, create) => {
@@ -15,7 +17,7 @@ const cssArgNormalizer = (arg, create) => {
   //       this code will have to be updated to match...
   // eslint-disable-next-line no-underscore-dangle
   if (!arg || arg._definition) return arg;
-  return create(() => ({ style: arg })).style;
+  return create({ [INLINE_STYLE_KEY]: arg })[INLINE_STYLE_KEY];
 };
 
 function withAmp(styles, resolve, create) {
