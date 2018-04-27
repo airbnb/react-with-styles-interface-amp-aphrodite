@@ -1,3 +1,6 @@
+## v1.0.4
+- [fix] Add support for Aphrodite 2 ([#5](https://github.com/airbnb/react-with-styles-interface-amp-aphrodite/pull/5))
+
 ## v1.0.3
 - [fix] Fix inline styles being converted ([#3](https://github.com/airbnb/react-with-styles-interface-amp-aphrodite/pull/3))
 
