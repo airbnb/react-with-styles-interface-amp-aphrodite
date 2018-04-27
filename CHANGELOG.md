@@ -1,3 +1,6 @@
+## v2.0.0
+- [breaking] Remove support for Aphrodite v1 and earlier ([#6](https://github.com/airbnb/react-with-styles-interface-amp-aphrodite/pull/6))
+
 ## v1.0.4
 - [fix] Add support for Aphrodite 2 ([#5](https://github.com/airbnb/react-with-styles-interface-amp-aphrodite/pull/5))
 
