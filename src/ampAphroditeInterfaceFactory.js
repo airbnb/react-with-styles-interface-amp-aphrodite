@@ -1,26 +1,11 @@
+import {
+  flushToStyleTag,
+  injectAndGetClassName,
+  defaultSelectorHandlers,
+} from 'aphrodite';
+
 import cullResponsiveStylesForAmp from './utils/cullResponsiveStylesForAmp';
 import isAmp from './utils/isAmp';
-
-let flushToStyleTag;
-let injectAndGetClassName;
-let defaultSelectorHandlers;
-try {
-  // Aphrodite 1
-  // eslint-disable-next-line import/no-unresolved, global-require
-  ({ flushToStyleTag, injectAndGetClassName } = require('aphrodite/lib/inject'));
-  // eslint-disable-next-line import/no-unresolved, global-require
-  ({ defaultSelectorHandlers } = require('aphrodite/lib/generate'));
-} catch (e) {
-  // Aphrodite 2
-  (
-    {
-      flushToStyleTag,
-      injectAndGetClassName,
-      defaultSelectorHandlers,
-    // eslint-disable-next-line import/no-unresolved, global-require
-    } = require('aphrodite')
-  );
-}
 
 const INLINE_STYLE_KEY = 'inlineStyle';
 
