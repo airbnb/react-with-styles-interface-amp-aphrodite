@@ -1,6 +1,11 @@
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
-import { StyleSheetTestUtils } from 'aphrodite';
+import {
+  StyleSheetTestUtils,
+  injectAndGetClassName,
+  defaultSelectorHandlers,
+  flushToStyleTag,
+} from 'aphrodite';
 import aphroditeInterface from 'react-with-styles-interface-aphrodite';
 
 import * as isAmp from '../src/utils/isAmp';
@@ -8,7 +13,12 @@ import * as isAmp from '../src/utils/isAmp';
 import ampAphroditeInterfaceFactory from '../src/ampAphroditeInterfaceFactory';
 
 describe('ampAphroditeInterfaceFactory', () => {
-  const ampAphroditeInterface = ampAphroditeInterfaceFactory(aphroditeInterface);
+  const ampAphroditeInterface = ampAphroditeInterfaceFactory(
+    aphroditeInterface,
+    injectAndGetClassName,
+    defaultSelectorHandlers,
+    flushToStyleTag,
+  );
   let aphroditeInterfaceResolveSpy;
   let aphroditeInterfaceResolveLTRSpy;
   let aphroditeInterfaceResolveRTLSpy;

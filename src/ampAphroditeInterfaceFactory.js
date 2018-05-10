@@ -1,9 +1,3 @@
-import {
-  flushToStyleTag,
-  injectAndGetClassName,
-  defaultSelectorHandlers,
-} from 'aphrodite';
-
 import cullResponsiveStylesForAmp from './utils/cullResponsiveStylesForAmp';
 import isAmp from './utils/isAmp';
 
@@ -23,7 +17,13 @@ const cssArgNormalizer = (arg, create) => {
   return create({ [INLINE_STYLE_KEY]: arg })[INLINE_STYLE_KEY];
 };
 
-function withAmp(styles, resolve, create) {
+function withAmp(
+  styles,
+  resolve,
+  create,
+  injectAndGetClassName,
+  defaultSelectorHandlers,
+) {
   if (isAmp()) {
     return {
       className: injectAndGetClassName(
@@ -37,7 +37,12 @@ function withAmp(styles, resolve, create) {
   return resolve(styles);
 }
 
-export default aphroditeInterface => ({
+export default (
+  aphroditeInterface,
+  injectAndGetClassName,
+  defaultSelectorHandlers,
+  flushToStyleTag,
+) => ({
   create(styleHash) {
     return aphroditeInterface.create(styleHash);
   },
@@ -52,17 +57,35 @@ export default aphroditeInterface => ({
 
   resolve(styles) {
     const { resolve, create } = aphroditeInterface;
-    return withAmp(styles, resolve, create);
+    return withAmp(
+      styles,
+      resolve,
+      create,
+      injectAndGetClassName,
+      defaultSelectorHandlers,
+    );
   },
 
   resolveLTR(styles) {
     const { resolveLTR, createLTR } = aphroditeInterface;
-    return withAmp(styles, resolveLTR, createLTR);
+    return withAmp(
+      styles,
+      resolveLTR,
+      createLTR,
+      injectAndGetClassName,
+      defaultSelectorHandlers,
+    );
   },
 
   resolveRTL(styles) {
     const { resolveRTL, createRTL } = aphroditeInterface;
-    return withAmp(styles, resolveRTL, createRTL);
+    return withAmp(
+      styles,
+      resolveRTL,
+      createRTL,
+      injectAndGetClassName,
+      defaultSelectorHandlers,
+    );
   },
 
   // Flushes all buffered styles to a style tag. Required for components
