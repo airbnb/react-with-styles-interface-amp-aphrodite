@@ -1,3 +1,7 @@
+## v2.1.0
+- [fix] Avoid using two copies of Aphrodite for no-important ([#8](https://github.com/airbnb/react-with-styles-interface-amp-aphrodite/pull/8))
+- [new] `ampAphroditeInterfaceFactory` now expects `injectAndGetClassName`, `defaultSelectorHandlers`, and `flushToStyleTag` as arguments ([#8](https://github.com/airbnb/react-with-styles-interface-amp-aphrodite/pull/8))
+
 ## v2.0.0
 - [breaking] Remove support for Aphrodite v1 and earlier ([#6](https://github.com/airbnb/react-with-styles-interface-amp-aphrodite/pull/6))
 
