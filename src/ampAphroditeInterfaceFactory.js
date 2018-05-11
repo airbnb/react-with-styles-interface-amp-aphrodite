@@ -1,9 +1,3 @@
-import {
-  flushToStyleTag,
-  injectAndGetClassName,
-  defaultSelectorHandlers,
-} from 'aphrodite';
-
 import cullResponsiveStylesForAmp from './utils/cullResponsiveStylesForAmp';
 import isAmp from './utils/isAmp';
 
@@ -23,7 +17,13 @@ const cssArgNormalizer = (arg, create) => {
   return create({ [INLINE_STYLE_KEY]: arg })[INLINE_STYLE_KEY];
 };
 
-function withAmp(styles, resolve, create) {
+function withAmp(
+  styles,
+  resolve,
+  create,
+  injectAndGetClassName,
+  defaultSelectorHandlers,
+) {
   if (isAmp()) {
     return {
       className: injectAndGetClassName(
@@ -37,38 +37,76 @@ function withAmp(styles, resolve, create) {
   return resolve(styles);
 }
 
-export default aphroditeInterface => ({
-  create(styleHash) {
-    return aphroditeInterface.create(styleHash);
-  },
+export default (
+  aphroditeInterface,
+  injectAndGetClassName,
+  defaultSelectorHandlers,
+  flushToStyleTag,
+) => {
+  // In case someone is calling this function directly without supplying these
+  // aphrodite function arguments, we want to add a fallback behavior to avoid
+  // breaking them.
+  // TODO: Remove this block in next semver-major change
+  if (!injectAndGetClassName || !defaultSelectorHandlers || !flushToStyleTag) {
+    console.warn('You appear to be using ampAphroditeInterfaceFactory in a deprecated a buggy way. Please pass in `injectAndGetClassName`, `defaultSelectorHandlers`, and `flushToStyleTag` as arguments to this function.');
+    ({
+      injectAndGetClassName, // eslint-disable-line no-param-reassign
+      defaultSelectorHandlers, // eslint-disable-line no-param-reassign
+      flushToStyleTag, // eslint-disable-line no-param-reassign
+    } = require('aphrodite')); // eslint-disable-line global-require
+  }
 
-  createLTR(styleHash) {
-    return aphroditeInterface.createLTR(styleHash);
-  },
+  return {
+    create(styleHash) {
+      return aphroditeInterface.create(styleHash);
+    },
 
-  createRTL(styleHash) {
-    return aphroditeInterface.createRTL(styleHash);
-  },
+    createLTR(styleHash) {
+      return aphroditeInterface.createLTR(styleHash);
+    },
 
-  resolve(styles) {
-    const { resolve, create } = aphroditeInterface;
-    return withAmp(styles, resolve, create);
-  },
+    createRTL(styleHash) {
+      return aphroditeInterface.createRTL(styleHash);
+    },
 
-  resolveLTR(styles) {
-    const { resolveLTR, createLTR } = aphroditeInterface;
-    return withAmp(styles, resolveLTR, createLTR);
-  },
+    resolve(styles) {
+      const { resolve, create } = aphroditeInterface;
+      return withAmp(
+        styles,
+        resolve,
+        create,
+        injectAndGetClassName,
+        defaultSelectorHandlers,
+      );
+    },
 
-  resolveRTL(styles) {
-    const { resolveRTL, createRTL } = aphroditeInterface;
-    return withAmp(styles, resolveRTL, createRTL);
-  },
+    resolveLTR(styles) {
+      const { resolveLTR, createLTR } = aphroditeInterface;
+      return withAmp(
+        styles,
+        resolveLTR,
+        createLTR,
+        injectAndGetClassName,
+        defaultSelectorHandlers,
+      );
+    },
 
-  // Flushes all buffered styles to a style tag. Required for components
-  // that depend upon previous styles in the component tree (i.e.
-  // for calculating container width, including padding/margin).
-  flush() {
-    flushToStyleTag();
-  },
-});
+    resolveRTL(styles) {
+      const { resolveRTL, createRTL } = aphroditeInterface;
+      return withAmp(
+        styles,
+        resolveRTL,
+        createRTL,
+        injectAndGetClassName,
+        defaultSelectorHandlers,
+      );
+    },
+
+    // Flushes all buffered styles to a style tag. Required for components
+    // that depend upon previous styles in the component tree (i.e.
+    // for calculating container width, including padding/margin).
+    flush() {
+      flushToStyleTag();
+    },
+  };
+};
