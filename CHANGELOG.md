@@ -1,3 +1,6 @@
+## v2.2.0
+- [new][deps] Allow peer dependency of react-with-styles@4.0.0 ([#9](https://github.com/airbnb/react-with-styles-interface-amp-aphrodite/pull/9))
+
 ## v2.1.0
 - [fix] Avoid using two copies of Aphrodite for no-important ([#8](https://github.com/airbnb/react-with-styles-interface-amp-aphrodite/pull/8))
 - [new] `ampAphroditeInterfaceFactory` now expects `injectAndGetClassName`, `defaultSelectorHandlers`, and `flushToStyleTag` as arguments ([#8](https://github.com/airbnb/react-with-styles-interface-amp-aphrodite/pull/8))
