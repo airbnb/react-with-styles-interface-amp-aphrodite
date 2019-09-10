@@ -1,6 +1,6 @@
 {
   "name": "react-with-styles-interface-amp-aphrodite",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "An Aphrodite interface for react-with-styles that supports pages rendered using Google's AMP.",
   "main": "lib/ampAphroditeInterface.js",
   "directories": {
